@@ -1,25 +1,31 @@
-import logo from './logo.svg';
-import './App.css';
 
-function App() {
+import { useEffect, useState } from "react";
+
+export function App() {
+
+const [repositories, setRepositories] = useState([])
+useEffect(( )=>{
+  fetch('https://api.github.com/users/YOMARCOS/repos')
+  .then(response=> response.json())
+  .then(data => setRepositories(data))
+ }, [ ])
+
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <h2>Meus Projetos</h2>
+      <ul>
+        {repositories.map(repository => {
+          return (
+            <li class="li"><a href={repository.html_url}>
+              <h3>
+                {repository.name}
+              </h3> </a>
+              <p>{repository.description}</p>
+             <img src="https://i.pinimg.com/736x/b5/1b/78/b51b78ecc9e5711274931774e433b5e6.jpg"></img>
+            </li>
+          )
+        })}
+      </ul>
     </div>
   );
 }
-
-export default App;
